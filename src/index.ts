@@ -18,13 +18,24 @@ const createWindow = (): void => {
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
+    alwaysOnTop: true,
+    title: "Overlay Window",
+    show: false,
+    autoHideMenuBar: true,
   });
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+  
+  // Set the opacity of the app.
+  mainWindow.setOpacity(0.6);
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show()
+  })
 };
 
 // This method will be called when Electron has finished
