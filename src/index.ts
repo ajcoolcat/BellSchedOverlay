@@ -31,7 +31,7 @@ const createWindow = (): void => {
   mainWindow.setOpacity(0.6);
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.show()
