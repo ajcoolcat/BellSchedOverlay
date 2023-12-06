@@ -13,8 +13,8 @@ if (require('electron-squirrel-startup')) {
 const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    height: 600,
-    width: 800,
+    height: 350,
+    width: 82,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
@@ -22,6 +22,7 @@ const createWindow = (): void => {
     title: "Overlay Window",
     show: false,
     autoHideMenuBar: true,
+    titleBarStyle: "hidden",
   });
 
   // and load the index.html of the app.
