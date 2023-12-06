@@ -13,10 +13,11 @@ if (require('electron-squirrel-startup')) {
 const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    height: 350,
-    width: 82,
+    height: 82,
+    width: 350,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      nodeIntegration: true
     },
     alwaysOnTop: true,
     title: "Overlay Window",
