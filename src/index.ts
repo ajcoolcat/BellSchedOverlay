@@ -28,7 +28,7 @@ const createWindow = (): void => {
     titleBarStyle: "hidden",
     focusable: false,
     maximizable: false,
-    closable: false,
+    closable: true,
     minimizable: false
   });
 
