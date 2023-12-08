@@ -1,8 +1,8 @@
 {
   "name": "bellschedoverlay",
-  "productName": "bellschedoverlay",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "productName": "Crooms Bell Schedule",
+  "version": "1.0.1",
+  "description": "The Crooms Bell Schedule App.",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
