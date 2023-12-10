@@ -1,7 +1,7 @@
 {
   "name": "bellschedoverlay",
   "productName": "Crooms Bell Schedule",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "The Crooms Bell Schedule App.",
   "main": ".webpack/main",
   "scripts": {
