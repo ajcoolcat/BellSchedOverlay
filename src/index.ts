@@ -56,7 +56,7 @@ if (app.isPackaged){
 const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    height: 82,
+    height: 79,
     width: 380,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
@@ -80,7 +80,7 @@ const createWindow = (): void => {
   mainWindow.setOpacity(0.7);
 
   // comment this out in production!!!!!
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 
   // Open the DevTools.
   //mainWindow.webContents.openDevTools();
