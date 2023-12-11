@@ -12,15 +12,14 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
+const server = config.hazelUpdateURL;
+const url = `${server}/update/${process.platform}/${app.getVersion()}`;
+
+autoUpdater.setFeedURL({ url });
+
 function checkForUpdates() {
   if (app.isPackaged){
-    const server = config.hazelUpdateURL;
-    const url = `${server}/update/${process.platform}/${app.getVersion()}`;
-
-    autoUpdater.setFeedURL({ url });
-
     autoUpdater.checkForUpdates();
-    
   }
 }
 
