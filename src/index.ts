@@ -11,45 +11,47 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
+if (app.isPackaged){
+  const server = config.hazelUpdateURL;
+  const url = `${server}/update/${process.platform}/${app.getVersion()}`;
 
-const server = config.hazelUpdateURL;
-const url = `${server}/update/${process.platform}/${app.getVersion()}`;
+  autoUpdater.setFeedURL({ url });
 
-autoUpdater.setFeedURL({ url });
-
-function checkForUpdates() {
-  if (app.isPackaged){
-    autoUpdater.checkForUpdates();
+  function checkForUpdates() {
+    
+      autoUpdater.checkForUpdates();
+  
   }
-}
 
 
-autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+  autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
 
-  dialog.showMessageBox({
-    type: 'info',
-    buttons: ['Restart', 'Later'],
-    title: 'Application Update',
-    message: process.platform === 'win32' ? releaseNotes : releaseName,
-    detail:
-      'A new version of the Crooms Bell Schedule has been downloaded. Restart the application to apply the updates.'
-  }).then((returnValue) => {
-    if (returnValue.response === 0) autoUpdater.quitAndInstall()
+    dialog.showMessageBox({
+      type: 'info',
+      buttons: ['Restart', 'Later'],
+      title: 'Application Update',
+      message: process.platform === 'win32' ? releaseNotes : releaseName,
+      detail:
+        'A new version of the Crooms Bell Schedule has been downloaded. Restart the application to apply the updates.'
+    }).then((returnValue) => {
+      if (returnValue.response === 0) autoUpdater.quitAndInstall()
+    });
+
+  })
+
+  autoUpdater.on('error', (message) => {
+    console.error('There was a problem updating the application');
+    console.error(message);
   });
 
-})
-
-autoUpdater.on('error', (message) => {
-  console.error('There was a problem updating the application');
-  console.error(message);
-});
-
-checkForUpdates();
-
-// Check for updates every 1 hour.
-setInterval(()=> {
   checkForUpdates();
-}, 3600000);
+
+  // Check for updates every 1 hour.
+  setInterval(()=> {
+    checkForUpdates();
+  }, 3600000);
+
+}
 
 const createWindow = (): void => {
   // Create the browser window.
@@ -78,7 +80,7 @@ const createWindow = (): void => {
   mainWindow.setOpacity(0.7);
 
   // comment this out in production!!!!!
-  //mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
   // Open the DevTools.
   //mainWindow.webContents.openDevTools();
