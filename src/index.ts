@@ -17,11 +17,10 @@ if (app.isPackaged){
 
   autoUpdater.setFeedURL({ url });
 
-  function checkForUpdates() {
+
     
-      autoUpdater.checkForUpdates();
+
   
-  }
 
 
   autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
@@ -44,11 +43,10 @@ if (app.isPackaged){
     console.error(message);
   });
 
-  checkForUpdates();
-
+  autoUpdater.checkForUpdates();
   // Check for updates every 1 hour.
   setInterval(()=> {
-    checkForUpdates();
+    autoUpdater.checkForUpdates();
   }, 3600000);
 
 }
@@ -96,14 +94,29 @@ const createWindow = (): void => {
     { label: "Crooms Bell Schedule", type: "normal", enabled: false},
     { label: "v" + app.getVersion().toString(), type: "normal", enabled: false},
     { type: "separator" },
+    { label: 'Check for Updates', type: 'normal', click: () => {manualUpdate();} },
     { label: 'Quit', type: 'normal', click: () => {app.quit()} }
   ]);
   tray.setToolTip('Crooms Bell Schedule');
   tray.setContextMenu(contextMenu);
 };
 
+const manualUpdate = (): void => {
+  autoUpdater.on("update-not-available", showUpToDateDialog);
+  autoUpdater.checkForUpdates();
+}
 
-
+const showUpToDateDialog = (): void => {
+  dialog.showMessageBox({
+    type: 'info',
+    buttons: ['Ok'],
+    title: 'Already up to date',
+    message: "",
+    detail:
+        "You're all up to date!"
+  })
+  autoUpdater.off("update-not-available", showUpToDateDialog);
+}
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
