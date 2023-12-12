@@ -35,6 +35,12 @@ if (app.isPackaged){
     }).then((returnValue) => {
       if (returnValue.response === 0) autoUpdater.quitAndInstall()
     });
+    try {
+      autoUpdater.off("update-not-available", showUpToDateDialog);
+    }
+    catch (e) {
+      console.warn(e);
+    }
 
   })
 
