@@ -83,7 +83,7 @@ const createWindow = (): void => {
 
   // Open the DevTools.
   // Comment in a prod release.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.showInactive()
