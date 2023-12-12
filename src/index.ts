@@ -57,7 +57,7 @@ const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     height: 79,
-    width: 380,
+    width: 365,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
       nodeIntegration: true
@@ -70,7 +70,11 @@ const createWindow = (): void => {
     focusable: false,
     maximizable: false,
     closable: true,
-    minimizable: false
+    minimizable: false,
+    hasShadow: false,
+    maxHeight: 79,
+    minHeight: 79,
+    minWidth: 355,
   });
 
   // and load the index.html of the app.
@@ -79,11 +83,9 @@ const createWindow = (): void => {
   // Set the opacity of the app.
   mainWindow.setOpacity(0.7);
 
-  // comment this out in production!!!!!
-  //mainWindow.webContents.openDevTools();
-
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+  // Comment in a prod release.
+  mainWindow.webContents.openDevTools();
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.showInactive()
