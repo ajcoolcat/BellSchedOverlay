@@ -96,11 +96,18 @@ if (app.isPackaged){
   // Check for updates every 1 hour.
   setInterval(()=> {
     checkForUpdates();
+    autoUpdater.on("update-not-available", enableButtonsOnAutoUpdate);
   }, 3600000);
 
 }
 
-
+const enableButtonsOnAutoUpdate = (): void => {
+  contextMenu.getMenuItemById("checkForUpdatesButton").enabled = true;
+  contextMenu.getMenuItemById("reopenWindowButton").enabled = true;
+  tray.setContextMenu(contextMenu);
+  isUpdating = false;
+  autoUpdater.off("update-not-available", enableButtonsOnAutoUpdate);
+}
 
 const createWindow = (): void => {
   // Create the browser window.
