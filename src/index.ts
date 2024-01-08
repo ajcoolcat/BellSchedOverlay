@@ -154,6 +154,7 @@ const createWindow = (): void => {
     { type: "separator" },
     { label: 'Check for Updates', type: 'normal', click: () => {manualUpdate();}, id: "checkForUpdatesButton" },
     { label: 'Reopen Window', type: 'normal', click: () => {mainWindow.close(); tray.destroy(); createWindow();}, id: "reopenWindowButton" },
+    { label: 'Open Online', type: 'normal', click: () => {siteOpen();}, id: 'siteButton'},
     { label: 'Report a Bug', type: 'normal', click: () => {bugReport();}, id: 'bugReportsButton'},
     { label: 'Quit', type: 'normal', click: () => {app.quit()}, id: "quitButton" }
   ]);
@@ -164,6 +165,10 @@ const createWindow = (): void => {
 const manualUpdate = (): void => {
   autoUpdater.on("update-not-available", showUpToDateDialog);
   checkForUpdates();
+}
+
+const siteOpen = (): void => {
+  shell.openExternal("https://croomssched.tech/")
 }
 
 const showUpToDateDialog = (): void => {
