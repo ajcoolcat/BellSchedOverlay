@@ -16,8 +16,7 @@ const config: ForgeConfig = {
   },
   rebuildConfig: {},
   makers: [new MakerSquirrel({
-    iconUrl: "https://croomssched.cyclic.app/favicon.ico", 
-    exe: "croomssched", setupMsi: "CroomsSchedSetup", setupExe: "CroomsSchedSetup",
+    iconUrl: "https://croomssched.cyclic.app/favicon.ico", setupMsi: "CroomsSchedSetup", setupExe: "CroomsSchedSetup",
   }), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
   plugins: [
     new AutoUnpackNativesPlugin({}),
