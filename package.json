@@ -1,7 +1,7 @@
 {
   "name": "bellschedoverlay",
   "productName": "Crooms Bell Schedule",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "The Crooms Bell Schedule App.",
   "main": ".webpack/main",
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "keywords": [],
   "author": {
-    "name": "CAIT Bell Schedule",
+    "name": "Crooms Bell Schedule",
     "email": "70107937+konekowo@users.noreply.github.com"
   },
   "license": "MIT",
