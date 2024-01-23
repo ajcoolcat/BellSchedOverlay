@@ -17,7 +17,7 @@ const config: ForgeConfig = {
   rebuildConfig: {},
   makers: [new MakerSquirrel({
     iconUrl: "https://croomssched.cyclic.app/favicon.ico",
-    setupExe: "CroomsSchedSetup.exe", setupIcon: "./installer.ico",
+    setupExe: "CroomsBellSetup.exe", setupIcon: "./installer.ico",
     loadingGif: "./loader.gif", 
   }), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
   plugins: [
