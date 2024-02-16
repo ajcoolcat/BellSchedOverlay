@@ -180,6 +180,39 @@ const createWindow = (): void => {
   tray.setContextMenu(contextMenu);
 };
 
+/*const aboutWindow = () => {
+  const aboutWin = new BrowserWindow({
+    height: 600,
+    width: 400,
+    webPreferences: {
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+    },
+    alwaysOnTop: false,
+    title: "Crooms Bell Schedule | About",
+    show: false,
+    autoHideMenuBar: true,
+    focusable: true,
+    maximizable: false,
+    closable: true,
+    minimizable: true,
+    hasShadow: true
+  });
+
+  // and load the index.html of the app.
+  aboutWin.loadURL("https://google.com");
+
+  // Set the opacity of the app.
+  aboutWin.setOpacity(1);
+
+  // Open the DevTools.
+  // Comment in a prod release.
+  // mainWindow.webContents.openDevTools();
+
+  aboutWin.once('ready-to-show', () => {
+    aboutWin.show()
+  });
+}*/
+
 const manualUpdate = (): void => {
   autoUpdater.on("update-not-available", showUpToDateDialog);
   checkForUpdates();
