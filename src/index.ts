@@ -46,7 +46,6 @@ if (app.isPackaged){
   autoUpdater.setFeedURL({ url });
 
   autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
-
     dialog.showMessageBox({
       type: 'info',
       buttons: ['Restart now', 'Restart later'],
@@ -198,7 +197,7 @@ const createWindow = (): void => {
     hasShadow: true
   });
 
-  // and load the index.html of the app.
+  // And load the index.html of the app.
   aboutWin.loadURL("https://google.com");
 
   // Set the opacity of the app.
