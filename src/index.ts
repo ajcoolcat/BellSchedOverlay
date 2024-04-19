@@ -17,6 +17,21 @@ let contextMenu : Menu;
 let tray : Tray;
 let isUpdating = false;
 
+const gotTheLock = app.requestSingleInstanceLock()
+
+if (!gotTheLock) {
+  app.quit()
+} else {
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
+    dialog.showMessageBox({
+      type: 'error',
+      buttons: ['Ok'],
+      title: 'Error',
+      message: "There is already an instance of Crooms Bell Schedule running! Quit that instance first!"
+    });
+  })
+}
+
 const checkForUpdates = (): void => {
   if (isUpdating){
     return;
@@ -71,6 +86,7 @@ if (app.isPackaged){
   autoUpdater.on('error', (message) => {
     console.error('There was a problem updating the application');
     console.error(message);
+    /*
     dialog.showMessageBox({
       type: 'error',
       buttons: ['Ok'],
@@ -78,6 +94,8 @@ if (app.isPackaged){
       message: "There was an error while trying to update the Crooms Bell Schedule:",
       detail: message.toString()
     });
+
+     */
     contextMenu.getMenuItemById("checkForUpdatesButton").enabled = true;
     contextMenu.getMenuItemById("reopenWindowButton").enabled = true;
     tray.setContextMenu(contextMenu);
