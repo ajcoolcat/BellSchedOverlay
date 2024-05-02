@@ -162,17 +162,17 @@ const createWindow = (): void => {
   }
 
   // @ts-ignore
-  const updateIcon = nativeImage.createFromDataURL(icons[theme].updateIcon);
+  const updateIcon = nativeImage.createFromDataURL(icons.updateIcon);
   // @ts-ignore
-  const reopenIcon = nativeImage.createFromDataURL(icons[theme].reopenIcon);
+  const reopenIcon = nativeImage.createFromDataURL(icons.reopenIcon);
   // @ts-ignore
-  const openInBrowserIcon = nativeImage.createFromDataURL(icons[theme].openInBrowserIcon);
+  const openInBrowserIcon = nativeImage.createFromDataURL(icons.openInBrowserIcon);
   // @ts-ignore
-  const bugReportIcon = nativeImage.createFromDataURL(icons[theme].bugReportIcon);
+  const bugReportIcon = nativeImage.createFromDataURL(icons.bugReportIcon);
   // @ts-ignore
-  const closeIcon = nativeImage.createFromDataURL(icons[theme].closeIcon);
+  const closeIcon = nativeImage.createFromDataURL(icons.closeIcon);
   // @ts-ignore
-  const infoIcon = nativeImage.createFromDataURL(icons[theme].infoIcon);
+  const infoIcon = nativeImage.createFromDataURL(icons.infoIcon);
 
   // disable right click menu on move region
   const WM_INITMENU = 0x0116;
