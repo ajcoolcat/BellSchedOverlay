@@ -22,7 +22,7 @@ const gotTheLock = app.requestSingleInstanceLock()
 if (!gotTheLock) {
   app.quit()
 } else {
-  app.on('second-instance', (event, commandLine, workingDirectory) => {
+  app.on('second-instance', () => {
     dialog.showMessageBox({
       type: 'error',
       buttons: ['Ok'],
@@ -121,7 +121,7 @@ const enableButtonsOnAutoUpdate = (): void => {
 const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    height: 79,
+    height: 83,
     width: 365,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
@@ -137,8 +137,8 @@ const createWindow = (): void => {
     closable: true,
     minimizable: false,
     hasShadow: false,
-    maxHeight: 79,
-    minHeight: 79,
+    maxHeight: 83,
+    minHeight: 83,
     minWidth: 355
   });
 
@@ -150,7 +150,7 @@ const createWindow = (): void => {
 
   // Open the DevTools.
   // Comment in a prod release.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.showInactive()
