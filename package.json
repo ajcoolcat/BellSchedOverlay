@@ -1,7 +1,7 @@
 {
   "name": "bellschedoverlay",
   "productName": "Crooms Bell Schedule",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "The Crooms Bell Schedule App.",
   "main": ".webpack/main",
   "scripts": {
@@ -30,7 +30,7 @@
     "@typescript-eslint/parser": "^5.62.0",
     "@vercel/webpack-asset-relocator-loader": "^1.7.3",
     "css-loader": "^6.8.1",
-    "electron": "27.0.2",
+    "electron": "30.0.0-alpha.3",
     "eslint": "^8.52.0",
     "eslint-plugin-import": "^2.29.0",
     "fork-ts-checker-webpack-plugin": "^7.3.0",
