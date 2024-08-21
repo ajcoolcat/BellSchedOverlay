@@ -153,13 +153,10 @@ const createWindow = (): void => {
   mainWindow.webContents.openDevTools();
 
   mainWindow.once('ready-to-show', () => {
-    mainWindow.showInactive()
+    mainWindow.showInactive();
   });
 
-  let theme = "light";
-  if (nativeTheme.shouldUseDarkColors){
-    theme = "dark";
-  }
+  let theme = nativeTheme.shouldUseDarkColors ? "dark" : "light";
 
   // @ts-ignore
   const updateIcon = nativeImage.createFromDataURL(icons.updateIcon);
