@@ -18,18 +18,31 @@ let tray : Tray;
 let isUpdating = false;
 let mainWindow : BrowserWindow;
 
-const gotTheLock = app.requestSingleInstanceLock()
+const gotTheLock = app.requestSingleInstanceLock();
 
 if (!gotTheLock) {
     app.quit()
 } else {
-    app.on('second-instance', () => {
+    app.on('second-instance', (_event, argv) => {
         dialog.showMessageBox({
-            type: 'error',
-            buttons: ['Ok'],
-            title: 'Error',
-            message: "There is already an instance of Crooms Bell Schedule running! Quit that instance first!"
+            type: 'info',
+            buttons: ['Close current widget', 'Use current widget'],
+            title: 'Crooms Bell Schedule',
+            icon: nativeImage.createFromDataURL(icons.bigAppIcon),
+            message: 'We\'re already open.',
+            detail: 'The Crooms Bell Schedule is already open. You can either choose\n' +
+                'to close the open widget, or use the current one.'
+        }).then((returnValue) => {
+            if (returnValue.response === 0) app.quit();
         });
+
+        if (!mainWindow || mainWindow.isDestroyed()) {
+            return;
+        }
+        const lastArg = argv[argv.length - 1];
+        if (lastArg) {
+            mainWindow.webContents.send('handle-uri', lastArg);
+        }
     })
 }
 
@@ -95,7 +108,6 @@ if (app.isPackaged){
           message: "There was an error while trying to update the Crooms Bell Schedule:",
           detail: message.toString()
         });
-
          */
         contextMenu.getMenuItemById("checkForUpdatesButton").enabled = true;
         contextMenu.getMenuItemById("reopenWindowButton").enabled = true;
@@ -180,46 +192,17 @@ const createWindow = (): void => {
     tray.setContextMenu(contextMenu);
 };
 
-/*const aboutWindow = () => {
-  const aboutWin = new BrowserWindow({
-    height: 600,
-    width: 400,
-    webPreferences: {
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-    },
-    alwaysOnTop: false,
-    title: "Crooms Bell Schedule | About",
-    show: false,
-    autoHideMenuBar: true,
-    focusable: true,
-    maximizable: false,
-    closable: true,
-    minimizable: true,
-    hasShadow: true
-  });
-
-  // And load the index.html of the app.
-  aboutWin.loadURL("https://google.com");
-
-  // Set the opacity of the app.
-  aboutWin.setOpacity(1);
-
-  // Open the DevTools.
-  // Comment in a prod release.
-  // mainWindow.webContents.openDevTools();
-
-  aboutWin.once('ready-to-show', () => {
-    aboutWin.show()
-  });
-}*/
-
 const manualUpdate = (): void => {
     autoUpdater.on("update-not-available", showUpToDateDialog);
     checkForUpdates();
 }
 
 const siteOpen = (): void => {
-    shell.openExternal("https://croomssched.tech/")
+    shell.openExternal("https://croomssched.tech/");
+}
+
+const openDailyPoll = (): void => {
+    shell.openExternal("https://poll.croomssched.tech/");
 }
 
 const showUpToDateDialog = (): void => {
@@ -250,13 +233,15 @@ const disableUpdatesForDevMode = (): void => {
 }
 
 const bugReport = (): void => {
-    shell.openExternal("https://github.com/ajcoolcat/BellSchedOverlay/issues")
+    shell.openExternal("https://github.com/ajcoolcat/BellSchedOverlay/issues");
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', () => {
+    createWindow();
+});
 
 app.on('activate', () => {
     // On OS X it's common to re-create a window in the app when the
