@@ -1,4 +1,5 @@
 import { app, BrowserWindow, Tray, Menu, nativeImage, autoUpdater, dialog, shell, screen, nativeTheme } from 'electron';
+import { enableDVDMode, disableDVDMode } from './dvd';
 import config from "./config.json";
 import icons from "./icons.json";
 
@@ -13,10 +14,10 @@ if (require('electron-squirrel-startup')) {
     app.quit();
 }
 
-let contextMenu : Menu;
-let tray : Tray;
+let contextMenu: Menu, windowOptions: Menu;
+let tray: Tray;
 let isUpdating = false;
-let mainWindow : BrowserWindow;
+let mainWindow: BrowserWindow;
 
 const gotTheLock = app.requestSingleInstanceLock();
 
@@ -145,6 +146,7 @@ const createWindow = (): void => {
         show: false,
         autoHideMenuBar: true,
         titleBarStyle: "hidden",
+        skipTaskbar: true,
         focusable: false,
         maximizable: false,
         closable: true,
@@ -178,15 +180,20 @@ const createWindow = (): void => {
 
     const icon = nativeImage.createFromDataURL(icons.appIcon);
 
+    windowOptions = Menu.buildFromTemplate([
+        { label: 'DVD Mode', type: 'checkbox', click: (e) => {toggleDVDMode(e)} },
+    ]);
+
     tray = new Tray(icon);
     contextMenu = Menu.buildFromTemplate([
-        { label: 'Crooms Bell Schedule v' + app.getVersion().toString(), enabled: false, id: 'title' },
+        { label: 'Crooms Bell Schedule v' + app.getVersion().toString(), id: 'title', click: () => aboutApp() },
         { type: 'separator' },
-        { label: 'Check for Updates', click: () => {manualUpdate();}, id: 'checkForUpdatesButton' },
+        { label: 'Check for Updates', click: () => manualUpdate(), id: 'checkForUpdatesButton' },
         { label: 'Reopen Window', click: () => {mainWindow.close(); tray.destroy(); createWindow();}, id: 'reopenWindowButton' },
-        { label: 'Open CBSH Website', click: () => {siteOpen();}, id: 'siteButton' },
-        { label: 'Report a Bug', click: () => {bugReport();}, id: 'bugReportsButton' },
-        { label: 'Quit', click: () => {app.quit()}, id: 'quitButton' }
+        { label: 'Window Options', type: 'submenu', id: 'windowOptionsMenu', submenu: windowOptions },
+        { label: 'Open CBSH Website', click: () => siteOpen(), id: 'siteButton' },
+        { label: 'Report a Bug', click: () => bugReport(), id: 'bugReportsButton' },
+        { label: 'Quit', click: () => app.quit(), id: 'quitButton' }
     ]);
     tray.setToolTip('Crooms Bell Schedule');
     tray.setContextMenu(contextMenu);
@@ -211,8 +218,7 @@ const showUpToDateDialog = (): void => {
         buttons: ['OK'],
         title: 'No Updates Available',
         message: "You're all set!",
-        detail:
-            "The application is up-to-date."
+        detail: "The application is up-to-date."
     })
     contextMenu.getMenuItemById("checkForUpdatesButton").enabled = true;
     contextMenu.getMenuItemById("reopenWindowButton").enabled = true;
@@ -234,6 +240,12 @@ const disableUpdatesForDevMode = (): void => {
 
 const bugReport = (): void => {
     shell.openExternal("https://github.com/ajcoolcat/BellSchedOverlay/issues");
+}
+
+const toggleDVDMode = (event: any) => {
+    const toggle = event.checked;
+
+    toggle === true ? enableDVDMode(mainWindow) : disableDVDMode();
 }
 
 // This method will be called when Electron has finished
