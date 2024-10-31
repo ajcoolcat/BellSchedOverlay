@@ -4,13 +4,14 @@ import config from './config.json';
 import icons from './icons.json';
 import path from 'path';
 
+// @ts-expect-error
+import started from "electron-squirrel-startup";
+
 declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string;
 declare const MAIN_WINDOW_VITE_NAME: string;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) {
-    app.quit();
-}
+if (started) app.quit();
 
 let contextMenu: Menu, windowOptions: Menu;
 let tray: Tray;
@@ -182,6 +183,7 @@ const createWindow = () => {
 
     windowOptions = Menu.buildFromTemplate([
         { label: 'DVD Mode', type: 'checkbox', click: (e) => toggleDVDMode(e) },
+        { label: 'Toggle DevTools', click: () => mainWindow.webContents.openDevTools() }
     ]);
 
     tray = new Tray(icon);

@@ -17,7 +17,7 @@ const config: ForgeConfig = {
         iconUrl: "https://croomssched.tech/favicon.ico",
         setupExe: "CroomsBellSetup.exe", setupIcon: "./installer.ico",
         loadingGif: "./loader.gif",
-    }), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+    })],
     plugins: [
         new VitePlugin({
             // `build` can specify multiple entry builds,
@@ -52,7 +52,7 @@ const config: ForgeConfig = {
             [FuseV1Options.EnableNodeOptionsEnvironmentVariable]: false,
             [FuseV1Options.EnableNodeCliInspectArguments]: false,
             [FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
-            [FuseV1Options.OnlyLoadAppFromAsar]: true,
+            [FuseV1Options.OnlyLoadAppFromAsar]: false,
         }),
     ],
 };
